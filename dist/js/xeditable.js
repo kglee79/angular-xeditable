@@ -1,7 +1,7 @@
 /*!
 angular-xeditable - 0.6.0
 Edit-in-place for angular.js
-Build date: 2016-12-27 
+Build date: 2017-01-03 
 */
 /**
  * Angular-xeditable module 
@@ -174,7 +174,8 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
             ['eDatePickerAppendToBody', 'datepicker-append-to-body'],
             ['eOnOpenFocus', 'on-open-focus'],
             ['eName', 'name'],
-            ['eDateDisabled', 'date-disabled']
+            ['eDateDisabled', 'date-disabled'],
+            ['eAltInputFormats', 'alt-input-formats']
         ];
 
         var dateOptionsNames = [
@@ -403,7 +404,8 @@ angular.module('xeditable').directive('editableCombodate', ['editableDirectiveFa
 
         var combodate = editableCombodate.getInstance(this.inputEl, options);
         combodate.$widget.find('select').bind('change', function(e) {
-          self.scope.$data = (new Date(combodate.getValue())).toISOString();
+          //.replace is so this works in Safari
+          self.scope.$data = (new Date(combodate.getValue().replace(/-/g, "/"))).toISOString();
         });
       }
     });
